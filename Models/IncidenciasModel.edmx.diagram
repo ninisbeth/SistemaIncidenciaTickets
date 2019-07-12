@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="41beb12c6318487eba9e71158585441d" Name="Diagram1">
+        <EntityTypeShape EntityType="incidenciasbdModel.Estados" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="incidenciasbdModel.Historial" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="incidenciasbdModel.Incidencia" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="incidenciasbdModel.SubtipoIncidencia" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="incidenciasbdModel.TipoIncidencia" Width="1.5" PointX="3.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="incidenciasbdModel.Usuarios" Width="1.5" PointX="3.75" PointY="9.5" IsExpanded="true" />
+        <AssociationConnector Association="incidenciasbdModel.FK__Historial__estad__5F7E2DAC" ManuallyRouted="false" />
+        <AssociationConnector Association="incidenciasbdModel.FK__Incidenci__estad__5BAD9CC8" ManuallyRouted="false" />
+        <AssociationConnector Association="incidenciasbdModel.FK__Historial__id_in__5E8A0973" ManuallyRouted="false" />
+        <AssociationConnector Association="incidenciasbdModel.FK__Incidenci__cread__58D1301D" ManuallyRouted="false" />
+        <AssociationConnector Association="incidenciasbdModel.FK__Incidenci__subti__5AB9788F" ManuallyRouted="false" />
+        <AssociationConnector Association="incidenciasbdModel.FK__Incidenci__tipo___59C55456" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

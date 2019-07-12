@@ -1,0 +1,433 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="incidenciasbdModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="id_estados" />
+          </Key>
+          <Property Name="id_estados" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="id_historial" />
+          </Key>
+          <Property Name="id_historial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="comentario" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_actualizacion" Type="datetime" />
+          <Property Name="id_incidencia1" Type="int" />
+          <Property Name="estado_actualizacion" Type="int" />
+        </EntityType>
+        <EntityType Name="Incidencia">
+          <Key>
+            <PropertyRef Name="id_incidencia" />
+          </Key>
+          <Property Name="id_incidencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="referencia" Type="varchar" MaxLength="50" />
+          <Property Name="titulo" Type="varchar" MaxLength="50" />
+          <Property Name="descripcion" Type="varchar" MaxLength="50" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="ultima_actualizacion" Type="datetime" />
+          <Property Name="fecha_cerrada" Type="datetime" />
+          <Property Name="creado_por" Type="int" />
+          <Property Name="tipo_incidencia" Type="int" />
+          <Property Name="subtipo_incidencia" Type="int" />
+          <Property Name="estado" Type="int" />
+        </EntityType>
+        <EntityType Name="SubtipoIncidencia">
+          <Key>
+            <PropertyRef Name="id_subtipo" />
+          </Key>
+          <Property Name="id_subtipo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_subtipo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TipoIncidencia">
+          <Key>
+            <PropertyRef Name="id_tipoIncidencia" />
+          </Key>
+          <Property Name="id_tipoIncidencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_tipo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="correo" Type="varchar" MaxLength="50" />
+          <Property Name="clave" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__Historial__estad__5F7E2DAC">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="id_estados" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="estado_actualizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historial__id_in__5E8A0973">
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incidencia">
+              <PropertyRef Name="id_incidencia" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="id_incidencia1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__cread__58D1301D">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="creado_por" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__estad__5BAD9CC8">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="id_estados" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__subti__5AB9788F">
+          <End Role="SubtipoIncidencia" Type="Self.SubtipoIncidencia" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubtipoIncidencia">
+              <PropertyRef Name="id_subtipo" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="subtipo_incidencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__tipo___59C55456">
+          <End Role="TipoIncidencia" Type="Self.TipoIncidencia" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoIncidencia">
+              <PropertyRef Name="id_tipoIncidencia" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="tipo_incidencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="incidenciasbdModelStoreContainer">
+          <EntitySet Name="Estados" EntityType="Self.Estados" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historial" EntityType="Self.Historial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Incidencia" EntityType="Self.Incidencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SubtipoIncidencia" EntityType="Self.SubtipoIncidencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoIncidencia" EntityType="Self.TipoIncidencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Historial__estad__5F7E2DAC" Association="Self.FK__Historial__estad__5F7E2DAC">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historial__id_in__5E8A0973" Association="Self.FK__Historial__id_in__5E8A0973">
+            <End Role="Incidencia" EntitySet="Incidencia" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__cread__58D1301D" Association="Self.FK__Incidenci__cread__58D1301D">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__estad__5BAD9CC8" Association="Self.FK__Incidenci__estad__5BAD9CC8">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__subti__5AB9788F" Association="Self.FK__Incidenci__subti__5AB9788F">
+            <End Role="SubtipoIncidencia" EntitySet="SubtipoIncidencia" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__tipo___59C55456" Association="Self.FK__Incidenci__tipo___59C55456">
+            <End Role="TipoIncidencia" EntitySet="TipoIncidencia" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="incidenciasbdModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estados">
+          <Key>
+            <PropertyRef Name="id_estados" />
+          </Key>
+          <Property Name="id_estados" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Historial" Relationship="Self.FK__Historial__estad__5F7E2DAC" FromRole="Estados" ToRole="Historial" />
+          <NavigationProperty Name="Incidencia" Relationship="Self.FK__Incidenci__estad__5BAD9CC8" FromRole="Estados" ToRole="Incidencia" />
+        </EntityType>
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="id_historial" />
+          </Key>
+          <Property Name="id_historial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="comentario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_actualizacion" Type="DateTime" Precision="3" />
+          <Property Name="id_incidencia1" Type="Int32" />
+          <Property Name="estado_actualizacion" Type="Int32" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Historial__estad__5F7E2DAC" FromRole="Historial" ToRole="Estados" />
+          <NavigationProperty Name="Incidencia" Relationship="Self.FK__Historial__id_in__5E8A0973" FromRole="Historial" ToRole="Incidencia" />
+        </EntityType>
+        <EntityType Name="Incidencia">
+          <Key>
+            <PropertyRef Name="id_incidencia" />
+          </Key>
+          <Property Name="id_incidencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="referencia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="titulo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="ultima_actualizacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_cerrada" Type="DateTime" Precision="3" />
+          <Property Name="creado_por" Type="Int32" />
+          <Property Name="tipo_incidencia" Type="Int32" />
+          <Property Name="subtipo_incidencia" Type="Int32" />
+          <Property Name="estado" Type="Int32" />
+          <NavigationProperty Name="Estados" Relationship="Self.FK__Incidenci__estad__5BAD9CC8" FromRole="Incidencia" ToRole="Estados" />
+          <NavigationProperty Name="Historial" Relationship="Self.FK__Historial__id_in__5E8A0973" FromRole="Incidencia" ToRole="Historial" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Incidenci__cread__58D1301D" FromRole="Incidencia" ToRole="Usuarios" />
+          <NavigationProperty Name="SubtipoIncidencia" Relationship="Self.FK__Incidenci__subti__5AB9788F" FromRole="Incidencia" ToRole="SubtipoIncidencia" />
+          <NavigationProperty Name="TipoIncidencia" Relationship="Self.FK__Incidenci__tipo___59C55456" FromRole="Incidencia" ToRole="TipoIncidencia" />
+        </EntityType>
+        <EntityType Name="SubtipoIncidencia">
+          <Key>
+            <PropertyRef Name="id_subtipo" />
+          </Key>
+          <Property Name="id_subtipo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_subtipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Incidencia" Relationship="Self.FK__Incidenci__subti__5AB9788F" FromRole="SubtipoIncidencia" ToRole="Incidencia" />
+        </EntityType>
+        <EntityType Name="TipoIncidencia">
+          <Key>
+            <PropertyRef Name="id_tipoIncidencia" />
+          </Key>
+          <Property Name="id_tipoIncidencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Incidencia" Relationship="Self.FK__Incidenci__tipo___59C55456" FromRole="TipoIncidencia" ToRole="Incidencia" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="correo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="clave" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Incidencia" Relationship="Self.FK__Incidenci__cread__58D1301D" FromRole="Usuarios" ToRole="Incidencia" />
+        </EntityType>
+        <Association Name="FK__Historial__estad__5F7E2DAC">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="id_estados" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="estado_actualizacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__estad__5BAD9CC8">
+          <End Role="Estados" Type="Self.Estados" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estados">
+              <PropertyRef Name="id_estados" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historial__id_in__5E8A0973">
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Incidencia">
+              <PropertyRef Name="id_incidencia" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="id_incidencia1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__cread__58D1301D">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="creado_por" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__subti__5AB9788F">
+          <End Role="SubtipoIncidencia" Type="Self.SubtipoIncidencia" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubtipoIncidencia">
+              <PropertyRef Name="id_subtipo" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="subtipo_incidencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Incidenci__tipo___59C55456">
+          <End Role="TipoIncidencia" Type="Self.TipoIncidencia" Multiplicity="0..1" />
+          <End Role="Incidencia" Type="Self.Incidencia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoIncidencia">
+              <PropertyRef Name="id_tipoIncidencia" />
+            </Principal>
+            <Dependent Role="Incidencia">
+              <PropertyRef Name="tipo_incidencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="incidenciasbdEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estados" EntityType="Self.Estados" />
+          <EntitySet Name="Historial" EntityType="Self.Historial" />
+          <EntitySet Name="Incidencia" EntityType="Self.Incidencia" />
+          <EntitySet Name="SubtipoIncidencia" EntityType="Self.SubtipoIncidencia" />
+          <EntitySet Name="TipoIncidencia" EntityType="Self.TipoIncidencia" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK__Historial__estad__5F7E2DAC" Association="Self.FK__Historial__estad__5F7E2DAC">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__estad__5BAD9CC8" Association="Self.FK__Incidenci__estad__5BAD9CC8">
+            <End Role="Estados" EntitySet="Estados" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historial__id_in__5E8A0973" Association="Self.FK__Historial__id_in__5E8A0973">
+            <End Role="Incidencia" EntitySet="Incidencia" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__cread__58D1301D" Association="Self.FK__Incidenci__cread__58D1301D">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__subti__5AB9788F" Association="Self.FK__Incidenci__subti__5AB9788F">
+            <End Role="SubtipoIncidencia" EntitySet="SubtipoIncidencia" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Incidenci__tipo___59C55456" Association="Self.FK__Incidenci__tipo___59C55456">
+            <End Role="TipoIncidencia" EntitySet="TipoIncidencia" />
+            <End Role="Incidencia" EntitySet="Incidencia" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="incidenciasbdModelStoreContainer" CdmEntityContainer="incidenciasbdEntities">
+          <EntitySetMapping Name="Estados">
+            <EntityTypeMapping TypeName="incidenciasbdModel.Estados">
+              <MappingFragment StoreEntitySet="Estados">
+                <ScalarProperty Name="id_estados" ColumnName="id_estados" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historial">
+            <EntityTypeMapping TypeName="incidenciasbdModel.Historial">
+              <MappingFragment StoreEntitySet="Historial">
+                <ScalarProperty Name="id_historial" ColumnName="id_historial" />
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
+                <ScalarProperty Name="fecha_actualizacion" ColumnName="fecha_actualizacion" />
+                <ScalarProperty Name="id_incidencia1" ColumnName="id_incidencia1" />
+                <ScalarProperty Name="estado_actualizacion" ColumnName="estado_actualizacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Incidencia">
+            <EntityTypeMapping TypeName="incidenciasbdModel.Incidencia">
+              <MappingFragment StoreEntitySet="Incidencia">
+                <ScalarProperty Name="id_incidencia" ColumnName="id_incidencia" />
+                <ScalarProperty Name="referencia" ColumnName="referencia" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="ultima_actualizacion" ColumnName="ultima_actualizacion" />
+                <ScalarProperty Name="fecha_cerrada" ColumnName="fecha_cerrada" />
+                <ScalarProperty Name="creado_por" ColumnName="creado_por" />
+                <ScalarProperty Name="tipo_incidencia" ColumnName="tipo_incidencia" />
+                <ScalarProperty Name="subtipo_incidencia" ColumnName="subtipo_incidencia" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubtipoIncidencia">
+            <EntityTypeMapping TypeName="incidenciasbdModel.SubtipoIncidencia">
+              <MappingFragment StoreEntitySet="SubtipoIncidencia">
+                <ScalarProperty Name="id_subtipo" ColumnName="id_subtipo" />
+                <ScalarProperty Name="nombre_subtipo" ColumnName="nombre_subtipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoIncidencia">
+            <EntityTypeMapping TypeName="incidenciasbdModel.TipoIncidencia">
+              <MappingFragment StoreEntitySet="TipoIncidencia">
+                <ScalarProperty Name="id_tipoIncidencia" ColumnName="id_tipoIncidencia" />
+                <ScalarProperty Name="nombre_tipo" ColumnName="nombre_tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="incidenciasbdModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="correo" ColumnName="correo" />
+                <ScalarProperty Name="clave" ColumnName="clave" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
